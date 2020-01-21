@@ -42,4 +42,12 @@ if ( $idade >= 18 ){
     echo "Maior de Idade";
 } else {
     echo "Menor de Idade";
-}lstat
+}
+
+$numero = 10;
+
+if ($numero % 2 == 0) {
+       echo "Par";
+} else {
+    echo "Impar";
+}
