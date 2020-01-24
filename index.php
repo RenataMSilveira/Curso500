@@ -1,30 +1,76 @@
 <?php
 
-// require ('../html/funcoes.php');
+$numeros = [
+    '4',
+    '16',
+    '80',
+    '57',
+    '44',
+    '100',
+    '33',
+];
 
-// // echo "$resultado";
-
-// $sexo = "M";
-// $altura = 1.80;
-
-// echo calculapesoideal($sexo,$altura);
-
-$a = 2;
-$b = 8;
-$c = 2;
-
-function calculadelta (float $a,float $b, float $c){
-    global $a,$b,$c ;
-    echo $resultado = ( pow($b,2) - 4 * $a * $c );
+foreach ($numeros as $numero)
+{
+    for ($numero ;$numero < count($numeros); $numero++ );
+    {
+        if ($numero % 2 === 0){
+            echo ("$numero é Impar <br>");
+        } else { echo ("$numero é Par <br>");
+        }
+    }
 }
 
-function calculax1 (float $a,float $b, float $c){
-    global $a,$b,$c, $resultado;
-    echo $resultado2 = (((-$b) + sqrt($resultado)) / 2 * $a);
-};
-
-function calcula x2
 
 
-do Caique
 
+// require ('../html/funcoes.php');
+
+
+
+// $matriz = [
+//     'cursos'=> [ 
+//         'PHP1' => [
+//             'Aluno1',
+//             'Aluno2'
+//         ],
+//         'PHP2'=> [
+//             'Aluno1',
+//             'Aluno2'
+//         ]
+//     ]
+// ];
+
+// var_dump ($matriz);
+
+//111
+
+
+// define('Frutas', ['banana','maça']);
+    
+
+// var_dump ('FRUTAS');
+
+//222
+
+//     $cursos=> [ 
+//         'PHP1' => [
+//             'Aluno1',
+//             'Aluno2'
+//         ],
+//         'PHP2'=> [
+//             'Aluno1',
+//             'Aluno2'
+//         ]
+//     ]
+// ];
+
+// foreach ($cursos as $curso){
+//     var_dump ($curso);
+//     echo '<br><br><br><br>'
+// }
+
+// foreach ($cursos as $curso => $alunos) {
+//     list($posicao1, $posicao2) = $alunos;
+//     print("Curso $curso possui os alunos $posicao1 e $posicao2 <br>");
+// }
