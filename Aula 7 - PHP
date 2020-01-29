@@ -1,0 +1,54 @@
+<?php
+
+require_once './db-mysql.php';
+
+
+*************** Filtro ********************
+
+$email = '%gmail%';
+$select = 'SELECT * FROM TB_usuario WHERE email LIKE ?';
+
+$stmt = mysqli_stmt_init($conexao);
+
+if (mysqli_stmt_prepare ($stmt, $select)){
+    mysqli_stmt_bind_param($stmt, "s" , $email);
+
+    mysqli_stmt_execute($stmt);
+
+    if($resultado = mysqli_stmt_get_result($stmt)) {
+        while ($linha = mysqli_fetch_assoc ($resultado)) {
+            foreach ($linha as $campo => $valor) {
+                echo "$campo : $valor <br>";
+            }
+
+            echo '<hr>';
+        }
+    }
+}
+
+*************** Inserindo dados ********************
+$nome = "Renata";
+$email = "teste@teste.com.br";
+$senha = '4linux';
+
+$insere = "INSERT INTO TB_usuario (nome, email, senha)" . 
+             "Values ( '$nome', '$email', '$senha')";
+
+if (mysqli_query( $conexao , $insere)) {
+    print ("linhas alteradas: " . mysqli_affected_rows ($conexao));
+} else {
+    print ("erro: " . mysqli_error ($conexao));
+}
+
+*************** Select ********************
+
+$select = "SELECT * FROM TB_usuario";
+
+if ( $resultado = mysqli_query($conexao, $select)) {
+    while ($linha = mysqli_fetch_assoc($resultado)) {
+        foreach ($linha as $coluna => $valor) {
+        echo "$coluna : $valor  <br>";
+        }
+        echo '<hr>';
+    }
+}
