@@ -1,114 +1,80 @@
 <?php
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
+require_once './db-post.php';
 
-require_once './PHPMailer-6.1.4/src/PHPMailer.php';
-require_once './PHPMailer-6.1.4/src/SMTP.php';
+$email = "jose.oliveira@gmail.com";
+$id = 3;
+$atualiza = "UPDATE usuario SET email = $1 WHERE id = $2";
 
-$email = new PHPMailer();
-$email ->setLanguage('pt_br','./lib/PHPMailer-6.1.4/language');
-$email ->isSMTP();
-$email ->Host = 'smtp.gmail.com';
-$email ->Port = 587;
-$email ->SMTPSecure = 'tls';
-$email ->SMTPAuth = true;
-$email ->charSet = PHPMailer :: CHARSET_UTF8;
-$email ->Username = 'becapizzaiola@gmail.com';
-$email ->Password = '123mudar@';
-$email ->setFrom('becapizzaiola@gmail.com');
-$email ->addAddress ('caiqueportela@4linux.com.br');
-$email ->Subject = 'Teste no Curso de PHP';
-$email ->isHTML (true);
-$email ->Body = '<h1>Enviei com o PHP!</h1>';
+if (pg_prepare ($conexao, 'att_user', $atualiza)) {
+    if ($resultado = pg_execute ($conexao, 'att_user', [$email , $id])){
 
-if (!$email ->send()){
-    print("erro: {$email->ErrorInfo}");
-} else { 
-    print("E-mail Enviado!");
-};
+        if ($linhas >0) {
+            print("atualização bem sucedida! $linhas foram atualizadas!");
+        }
+    }
 
-?>
-// <!-- <!-- <form method= "post">
-//     <label>Usuario: </label> 
-    <imput type="text" name="usuario">
-    <br>
-    <label>Senha: </label> 
-    <imput type="text" name="senha">
-    <br>
-    <button type="submit">Entrar</button
+    pg_free_result($resultado);
+}else {
+    print("erro ao preparar:" . pg_last_error($conexao));
+}
 
-// $numeros = [ -->
-//     '4',
-//     '16',
-//     '80',
-//     '57',
-//     '44',
-//     '100',
-//     '33',
-// ];
 
-// foreach ($numeros as $numero)
-// {
-//     for ($numero ;$numero < count($numeros); $numero++ );
-//     {
-//         if ($numero % 2 === 0){
-//             echo ("$numero é Impar <br>");
-//         } else { echo ("$numero é Par <br>");
+pg_close ($conexao);
+
+//************************Consulta de Dados********************** */
+
+// $parametro = '%a%';
+// $consulta = "SELECT * FROM usuario WHERE email LIKE $1";
+
+// if (pg_prepare($conexao, '', $consulta)){
+//     if ($resultado = pg_execute($conexao, '', [$parametro])){
+//         while ($linha = pg_fetch_assoc ($resultado)) {
+//             foreach ($linha as $campo => $dado) {
+//                 echo "$campo => $dado<br>";
+//             }
+
+//             echo '<hr>';
+
 //         }
+//     }
+
+//     pg_free_result($resultado);
+// }
+
+// pg_close ($conexao);
+
+//****************Insere Dados PG*************************** */
+
+// $nome = "Renata";
+// $email = 'renatamessias.silveira@gmail.com';
+// $senha = '4linux';
+
+// $inserir = "INSERT INTO usuario (nome,senha,email)" .
+//             "VALUES ('$nome', '$senha','$email' )";
+
+// if ($resultado = pg_query($conexao,$inserir)){
+//     print( "linhas afetadas: " . pg_affected_rows ($resultado));
+// } else {
+//     print ("erro: " . pg_result_error($resultado));
+// }
+// pg_close ($conexao);
+
+//*********************Consulta Postgre******************* */
+
+// $consulta = "SELECT * FROM usuario";
+
+// if ($result = pg_query($conexao,$consulta)) {
+//     while ($linha = pg_fetch_assoc ($result)) {
+//         foreach ($linha as $campo => $dado) {
+//             echo "$campo : $dado <br>";
+//         }
+
+//         echo '<hr>';
 //     }
 // }
 
+// pg_free_result ($result);
 
+// pg_close ($conexao);
 
-
-// require ('../html/funcoes.php');
-
-
-
-// $matriz = [
-//     'cursos'=> [ 
-//         'PHP1' => [
-//             'Aluno1',
-//             'Aluno2'
-//         ],
-//         'PHP2'=> [
-//             'Aluno1',
-//             'Aluno2'
-//         ]
-//     ]
-// ];
-
-// var_dump ($matriz);
-
-//111
-
-
-// define('Frutas', ['banana','maça']);
-    
-
-// var_dump ('FRUTAS');
-
-//222
-
-//     $cursos=> [ 
-//         'PHP1' => [
-//             'Aluno1',
-//             'Aluno2'
-//         ],
-//         'PHP2'=> [
-//             'Aluno1',
-//             'Aluno2'
-//         ]
-//     ]
-// ];
-
-// foreach ($cursos as $curso){
-//     var_dump ($curso);
-//     echo '<br><br><br><br>'
-// }
-
-// foreach ($cursos as $curso => $alunos) {
-//     list($posicao1, $posicao2) = $alunos;
-//     print("Curso $curso possui os alunos $posicao1 e $posicao2 <br>");
-// } -->
