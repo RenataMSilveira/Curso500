@@ -1,0 +1,334 @@
+developer@developer:~$ mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 2
+Server version: 5.7.29 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases
+    -> 
+[1]+  Parado                  mysql -u root -p
+developer@developer:~$ mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 3
+Server version: 5.7.29 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| Teste              |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| sys                |
++--------------------+
+6 rows in set (0,05 sec)
+
+mysql> create database blog;
+Query OK, 1 row affected (0,00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| Teste              |
+| blog               |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| sys                |
++--------------------+
+7 rows in set (0,00 sec)
+
+mysql> use blog
+Database changed
+mysql> creat table TB_usuario (
+    -> id int not null auto_increment,
+    -> nome varchar(50) not null,
+    -> email varchar(255) not null,
+    -> primary key (id)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'creat table TB_usuario (
+id int not null auto_increment,
+nome varchar(50) not nu' at line 1
+mysql> create table TB_usuario ( id int not null auto_increment, nome varchar(50) not null, email varchar(255) not null, primary key (id) );
+Query OK, 0 rows affected (0,99 sec)
+
+mysql> use blog
+Database changed
+mysql> show table
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> show tables;
++----------------+
+| Tables_in_blog |
++----------------+
+| TB_usuario     |
++----------------+
+1 row in set (0,00 sec)
+
+mysql> insert into TB_usuario (1 , Renata, teste@teste.com.br);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1 , Renata, teste@teste.com.br)' at line 1
+mysql> show columns from usuario;
+ERROR 1146 (42S02): Table 'blog.usuario' doesn't exist
+mysql> use blog
+Database changed
+mysql> show columns from usuario;
+ERROR 1146 (42S02): Table 'blog.usuario' doesn't exist
+mysql> alter table TB_usuario
+    -> add column senha char(60) not null after name;
+ERROR 1054 (42S22): Unknown column 'name' in 'TB_usuario'
+mysql> alter table TB_usuario add column senha char(60) not null after nome;
+Query OK, 0 rows affected (1,73 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table TB_usuario modify column senha varchar(50) not null;
+Query OK, 0 rows affected (2,40 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show columns from TB_usuario;
++-------+--------------+------+-----+---------+----------------+
+| Field | Type         | Null | Key | Default | Extra          |
++-------+--------------+------+-----+---------+----------------+
+| id    | int(11)      | NO   | PRI | NULL    | auto_increment |
+| nome  | varchar(50)  | NO   |     | NULL    |                |
+| senha | varchar(50)  | NO   |     | NULL    |                |
+| email | varchar(255) | NO   |     | NULL    |                |
++-------+--------------+------+-----+---------+----------------+
+4 rows in set (0,00 sec)
+
+mysql> creat table post (
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'creat table post (' at line 1
+mysql> creat table postagem (
+    -> id int not null auto_increment,
+    -> titulo varchar(200) not null,
+    -> texto text not null,
+    -> usuario_id int(11)not null,
+    -> data_criacao datetime not null default now(),
+    -> data_postagem datetime not null,
+    -> primary key (id),
+    -> index 'fk_post_1_idx' (usuario_id ASC),
+    -> constraint fk_post_1
+    -> foreign key (usuario_id)
+    -> references usuario(id)
+    -> on delete restrict
+    -> on update restrict);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'creat table postagem (
+id int not null auto_increment,
+titulo varchar(200) not n' at line 1
+mysql> create table postagem ( id int not null auto_increment, titulo varchar(200) not null, texto text not null, usuario_id int(11)not null, data_criacao datetime not null default now(), data_postagem datetime not null, primary key (id), index `fk_post_1_idx`  (usuario_id ASC), constraint fk_post_1 foreign key (usuario_id) references usuario(id) on delete restrict on update restrict);
+ERROR 1215 (HY000): Cannot add foreign key constraint
+mysql> 
+mysql> create table postagem ( id int not null auto_increment, titulo varchar(200) not null, texto text not null, usuario_id int(11) not null, data_criacao datetime not null default now(), data_postagem datetime not null, primary key (id), index `fk_post_1_idx` (usuario_id ASC), constraint fk_post_1 foreign key (usuario_id) references usuario (id) on delete restrict on update restrict);
+ERROR 1215 (HY000): Cannot add foreign key constraint
+mysql> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+mysql> show tables;
++----------------+
+| Tables_in_blog |
++----------------+
+| TB_usuario     |
++----------------+
+1 row in set (0,00 sec)
+
+mysql> create table postagem ( id int not null auto_increment, titulo varchar(200) not null, texto text not null, usuario_id int(11) not null, data_criacao datetime not null default now(), data_postagem datetime not null, primary key (id), index `fk_post_1_idx` (usuario_id ASC), constraint fk_post_1 foreign key (usuario_id) references TB_usuario (id) on delete restrict on update restrict);
+Query OK, 0 rows affected (1,00 sec)
+
+mysql> show tables;                                                             +----------------+
+| Tables_in_blog |
++----------------+
+| TB_usuario     |
+| postagem       |
++----------------+
+2 rows in set (0,00 sec)
+
+mysql> show columns from postagem;
++---------------+--------------+------+-----+-------------------+----------------+
+| Field         | Type         | Null | Key | Default           | Extra          |
++---------------+--------------+------+-----+-------------------+----------------+
+| id            | int(11)      | NO   | PRI | NULL              | auto_increment |
+| titulo        | varchar(200) | NO   |     | NULL              |                |
+| texto         | text         | NO   |     | NULL              |                |
+| usuario_id    | int(11)      | NO   | MUL | NULL              |                |
+| data_criacao  | datetime     | NO   |     | CURRENT_TIMESTAMP |                |
+| data_postagem | datetime     | NO   |     | NULL              |                |
++---------------+--------------+------+-----+-------------------+----------------+
+6 rows in set (0,00 sec)
+
+mysql> insert into TB_usuario (nome,email,senha) values('Maria', 'maria@gmail.com','123456');
+Query OK, 1 row affected (0,16 sec)
+
+mysql> show columns from postagem;                                              +---------------+--------------+------+-----+-------------------+----------------+
+| Field         | Type         | Null | Key | Default           | Extra          |
++---------------+--------------+------+-----+-------------------+----------------+
+| id            | int(11)      | NO   | PRI | NULL              | auto_increment |
+| titulo        | varchar(200) | NO   |     | NULL              |                |
+| texto         | text         | NO   |     | NULL              |                |
+| usuario_id    | int(11)      | NO   | MUL | NULL              |                |
+| data_criacao  | datetime     | NO   |     | CURRENT_TIMESTAMP |                |
+| data_postagem | datetime     | NO   |     | NULL              |                |
++---------------+--------------+------+-----+-------------------+----------------+
+6 rows in set (0,01 sec)
+
+mysql> show table TB_usuario
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TB_usuario' at line 1
+mysql> show table TB_usuario;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TB_usuario' at line 1
+mysql> show tables;
++----------------+
+| Tables_in_blog |
++----------------+
+| TB_usuario     |
+| postagem       |
++----------------+
+2 rows in set (0,00 sec)
+
+mysql> show columns from postagem;
++---------------+--------------+------+-----+-------------------+----------------+
+| Field         | Type         | Null | Key | Default           | Extra          |
++---------------+--------------+------+-----+-------------------+----------------+
+| id            | int(11)      | NO   | PRI | NULL              | auto_increment |
+| titulo        | varchar(200) | NO   |     | NULL              |                |
+| texto         | text         | NO   |     | NULL              |                |
+| usuario_id    | int(11)      | NO   | MUL | NULL              |                |
+| data_criacao  | datetime     | NO   |     | CURRENT_TIMESTAMP |                |
+| data_postagem | datetime     | NO   |     | NULL              |                |
++---------------+--------------+------+-----+-------------------+----------------+
+6 rows in set (0,00 sec)
+
+mysql> show columns from TB_usuario;
++-------+--------------+------+-----+---------+----------------+
+| Field | Type         | Null | Key | Default | Extra          |
++-------+--------------+------+-----+---------+----------------+
+| id    | int(11)      | NO   | PRI | NULL    | auto_increment |
+| nome  | varchar(50)  | NO   |     | NULL    |                |
+| senha | varchar(50)  | NO   |     | NULL    |                |
+| email | varchar(255) | NO   |     | NULL    |                |
++-------+--------------+------+-----+---------+----------------+
+4 rows in set (0,00 sec)
+
+mysql> select * from TB_usuario;
++----+-------+--------+-----------------+
+| id | nome  | senha  | email           |
++----+-------+--------+-----------------+
+|  1 | Maria | 123456 | maria@gmail.com |
++----+-------+--------+-----------------+
+1 row in set (0,00 sec)
+
+mysql> update TB_usuario set email= 'maria.silva.silva@gmail.com , senha = '654321' where id =1;
+    '> update TB_usuario set email= 'maria.silva.silva@gmail.com , senha = '654321' where id =1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '654321' where id =1;
+update TB_usuario set email= 'maria.silva.silva@gmail.com ,' at line 1
+mysql> select * from TB_usuario;                                                +----+-------+--------+-----------------+
+| id | nome  | senha  | email           |
++----+-------+--------+-----------------+
+|  1 | Maria | 123456 | maria@gmail.com |
++----+-------+--------+-----------------+
+1 row in set (0,00 sec)
+
+mysql> update TB_usuario set email= 'maria.silva.silva@gmail.com , senha = '654321' where id =1;                                                                    '> 
+    '> update TB_usuario set email= 'maria.silva.silva@gmail.com , senha = '654321' where id =1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '654321' where id =1;
+
+update TB_usuario set email= 'maria.silva.silva@gmail.com ' at line 1
+mysql> ;
+ERROR: 
+No query specified
+
+mysql> update TB_usuario set email = 'maria.silva.silva@gmail.com' , senha = '654321' where id =1;                                                                                                                                              Query OK, 1 row affected (0,12 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from TB_usuario;                                                +----+-------+--------+-----------------------------+
+| id | nome  | senha  | email                       |
++----+-------+--------+-----------------------------+
+|  1 | Maria | 654321 | maria.silva.silva@gmail.com |
++----+-------+--------+-----------------------------+
+1 row in set (0,00 sec)
+
+mysql> insert into TB_usuario (nome,email,senha) values
+    -> ('Joana', 'joao@gmail.com','456891'),
+    -> ('Josefa', 'josefa@gmail.com', '999887'),
+    -> ('Alan', 'alan@gmail.com', '458907');
+Query OK, 3 rows affected (0,13 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from TB_usuario;
++----+--------+--------+-----------------------------+
+| id | nome   | senha  | email                       |
++----+--------+--------+-----------------------------+
+|  1 | Maria  | 654321 | maria.silva.silva@gmail.com |
+|  2 | Joana  | 456891 | joao@gmail.com              |
+|  3 | Josefa | 999887 | josefa@gmail.com            |
+|  4 | Alan   | 458907 | alan@gmail.com              |
++----+--------+--------+-----------------------------+
+4 rows in set (0,00 sec)
+
+mysql> select * from usuario where senha = '999887';
+ERROR 1146 (42S02): Table 'blog.usuario' doesn't exist
+mysql> select * from TB_usuario where senha = '999887';
++----+--------+--------+------------------+
+| id | nome   | senha  | email            |
++----+--------+--------+------------------+
+|  3 | Josefa | 999887 | josefa@gmail.com |
++----+--------+--------+------------------+
+1 row in set (0,00 sec)
+
+mysql> select * from TB_usuario where email like '%gmail%';
++----+--------+--------+-----------------------------+
+| id | nome   | senha  | email                       |
++----+--------+--------+-----------------------------+
+|  1 | Maria  | 654321 | maria.silva.silva@gmail.com |
+|  2 | Joana  | 456891 | joao@gmail.com              |
+|  3 | Josefa | 999887 | josefa@gmail.com            |
+|  4 | Alan   | 458907 | alan@gmail.com              |
++----+--------+--------+-----------------------------+
+4 rows in set (0,00 sec)
+
+mysql> exit
+Bye
+developer@developer:~$ su - postgres
+Senha:
+postgres@developer:~$ psql
+psql (11.5 (Debian 11.5-1+deb10u1), servidor 11.6 (Debian 11.6-1.pgdg100+1))
+Digite "help" para ajuda.
+
+postgres=# create database blog owner developer;
+CREATE DATABASE
+postgres=# 
