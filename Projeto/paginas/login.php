@@ -1,8 +1,25 @@
 <?php
 
-?>
+require_once ('./acoes/login.php');
 
+    if ($_SERVER['REQUEST_METHOD'] === "POST") {
+        $username = $_POST['username'];
+        $senha = $_POST['senha'];
+
+        $resultado = validaLogin($username, $senha, $conexao);
+    }
+?>
 <div class="container">
+    <?php if(isset($_GET['mensagem'])): ?>
+        <div class="alert alert-success" role="alert">
+            Usuário cadastrado com sucesso!
+        </div>
+    <?php endif; ?>
+    <?php if(isset($resultado)): ?>
+        <div class="alert alert-danger" role="alert">
+            <?= $resultado; ?>
+        </div>
+    <?php endif; ?>
 <form method="post">
   <div class="form-group">
     <label for="username">Usuário</label>
