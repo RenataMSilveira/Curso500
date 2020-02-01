@@ -1,6 +1,6 @@
 <?php
 
-function cadastrarProduto($nome, $descricao, $tipo, $preco,$conexao)
+function cadastrarProduto($nome, $descricao, $tipo, $preco, $conexao)
 {
     $cadastrar = 'INSERT INTO produto(nome,descricao,tipo,preco) VALUES (?,?,?,?)';
 
